@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_edit.*
 
@@ -29,6 +31,15 @@ class EditActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_edit, menu)
+        var deleteBtn = menu?.findItem(R.id.menu_delete)
+        deleteBtn?.setOnMenuItemClickListener {
+            deleteEvent()
+            true
+        }
+        return true
+    }
     private fun confirm(){
         val newEvent = edtText_edit.text.toString()
         saveEvent(newEvent)
@@ -41,5 +52,13 @@ class EditActivity : AppCompatActivity() {
         var index = 0
         while (!preference.getString("myNote-$index", "").isNullOrEmpty()) index++
         editor.putString("myNote-$index",note).apply()
+        val intent = Intent(this, EditActivity::class.java);
+        intent.putExtra("editword", note)
+    }
+    private fun deleteEvent(){
+        Log.d("data", "hi")
+        val preference = getSharedPreferences("MySP", Context.MODE_PRIVATE)
+        val editor = preference.edit()
+        editor.clear().commit()
     }
 }

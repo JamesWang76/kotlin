@@ -17,8 +17,6 @@ class activity_choosephoto : AppCompatActivity() {
 
                 }
             }
-
-
         }
     }
 

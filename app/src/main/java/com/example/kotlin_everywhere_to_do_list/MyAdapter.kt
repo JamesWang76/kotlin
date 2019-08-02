@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_note.view.*
+import com.bumptech.glide.Glide
 
 class MyAdapter: RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
     private var noteList = mutableListOf<Holder.Datas>()
@@ -25,13 +26,13 @@ class MyAdapter: RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
         viewHolder.bind(noteList[position])
     }
 
-    class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
+    class MyViewHolder(val view: View): RecyclerView.ViewHolder(view){
         val tvNote = view.tv_note
         val tvImg = view.tv_img
-
         fun bind(newList: Holder.Datas){
             tvNote.text = newList.text
-            tvImg.setImageBitmap(newList.img)  // glide
+//            tvImg.setImageBitmap(newList.img)  // glide
+            Glide.with(view).load(newList.img).into(tvImg)
             // onResume, onStart
         }
     }

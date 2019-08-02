@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Kotlin-Everywhere-To-do-List.iml" filepath="$PROJECT_DIR$/Kotlin-Everywhere-To-do-List.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Kotlin-Everywhere-To-do-List-Part.3-recyclerView.iml" filepath="$PROJECT_DIR$/.idea/Kotlin-Everywhere-To-do-List-Part.3-recyclerView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin.iml" filepath="$PROJECT_DIR$/kotlin.iml" />
     </modules>
   </component>
 </project>

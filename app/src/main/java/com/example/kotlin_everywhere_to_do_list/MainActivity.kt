@@ -16,10 +16,27 @@ import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
+
     private val myAdapter = MyAdapter()
     private var holderList = mutableListOf<Holder.Datas>()
+    val noteList = mutableListOf<Holder.Datas>()
+
     val TXT_CODE = 1
     val ALBUM_CODE = 2
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("activity", "pause")
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("sizeResume", myAdapter.itemCount.toString())
+        Log.d("activity", "resume")
+        myAdapter.update(noteList)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +59,22 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        Log.d("data: " , data.toString())
+        Log.d("data: " , data.toString())
 
         when(requestCode) {
             TXT_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    loadTxtEvent()
+                    val intent = intent
+//                    loadTxtEvent()
                 }
             }
             ALBUM_CODE -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     val resolver = this.contentResolver
                     val bitmap = MediaStore.Images.Media.getBitmap(resolver, data?.data)
-                    holderList.add(Holder.Datas(bitmap, "hi"))
-                    myAdapter.update(holderList)
+                    noteList.add(Holder.Datas(bitmap, "hi"))
+                    Log.d("sizeActicity", myAdapter.itemCount.toString())
+                    myAdapter.update(noteList)
                     // glide
                 }
             }
@@ -68,26 +87,36 @@ class MainActivity : AppCompatActivity() {
         var addImage = menu?.findItem(R.id.menu_Image_add)
         add?.setOnMenuItemClickListener {
             addEvent()
-
             true
         }
         addImage?.setOnMenuItemClickListener {
             choosePhotoEvent()
-
             true
         }
+
+
         return true
         //return super.onCreateOptionsMenu(menu)
     }
     private fun loadTxtEvent(){
         val loader = getSharedPreferences("MySP", Context.MODE_PRIVATE)
         val keyList = loader.all.keys.sorted()
-        val noteList = mutableListOf<Holder.Datas>()
+        for (key in keyList){
+
+            noteList.add(Holder.Datas(null, loader.getString(key, "")!!))
+        }
+        myAdapter.update(noteList)
+    }
+    private fun addTxtEvent(){
+        myAdapter.update(noteList)
+    }
+    private fun deletePrefData(){
+        val loader = getSharedPreferences("MySP", Context.MODE_PRIVATE)
+        val keyList = loader.all.keys.sorted()
         for (key in keyList){
             noteList.add(Holder.Datas(null, loader.getString(key, "")!!))
         }
         myAdapter.update(noteList)
     }
-
 }
 

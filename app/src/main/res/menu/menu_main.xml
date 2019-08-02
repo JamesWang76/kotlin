@@ -5,4 +5,5 @@
           app:showAsAction="always" android:title="Add"/>
     <item android:id="@+id/menu_Image_add" android:icon="@drawable/ic_add_box_white_24dp"
           android:title="Add Image"/>
+
 </menu>
